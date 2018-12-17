@@ -1,25 +1,12 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Game from './components/Game';
+import img from './imgs/713f36b9c2e2aca894b2290d8cb788d9.jpg';
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <Game size={3} pieceSize={120} img={img} />
       </div>
     );
   }

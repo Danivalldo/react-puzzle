@@ -1,0 +1,10 @@
+.piece{
+	background-color: #ccc;
+	/*border: solid 1px #000;*/
+	position: absolute;
+	box-sizing: border-box;
+	transition: transform .1s ease;
+	background-repeat: no-repeat;
+	color: #FFF;
+	font-size: 1.3em;
+}
