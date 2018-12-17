@@ -4,7 +4,10 @@
 	position: absolute;
 	box-sizing: border-box;
 	transition: transform .1s ease;
+	transform: translate3d(0px,0px,1px);
 	background-repeat: no-repeat;
 	color: #FFF;
 	font-size: 1.3em;
+	top: 0;
+	left: 0;
 }

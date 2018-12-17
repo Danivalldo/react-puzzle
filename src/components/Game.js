@@ -20,15 +20,34 @@ class Game extends Component{
 			}	
 		}
 
-		//this.state.piecesPosition[`piece-0`] = null;
-
-		//this.placePieces();
 		this._handleKeyUp = this.onKeyUp.bind(this);
 		window.addEventListener('keyup', this._handleKeyUp);
 	}
 
 	componentDidMount(){
 		//this.shuffle();
+	}
+
+	componentWillUnount(){
+		window.removeEventListener('keyup', this._handleKeyUp);
+	}
+
+	componentDidUpdate(){
+		this.checkSuccess();
+	}
+
+	checkSuccess(){
+		let wellPlaced = 0;
+		for(let k in this.state.piecesPosition){
+			const checkingPiece = this.state.piecesPosition[k];
+			if((checkingPiece.row === checkingPiece.initialRow) && (checkingPiece.col === checkingPiece.initialCol)){
+				wellPlaced++;
+			}
+		}
+
+		if(wellPlaced === (this.props.size * this.props.size)-1){
+			alert('Success!');
+		}
 	}
 
 	onKeyUp(e){
@@ -49,11 +68,13 @@ class Game extends Component{
 				case 'ArrowLeft':
 					nextEmptyPos.col = (nextEmptyPos.col < this.props.size-1)?nextEmptyPos.col+1:nextEmptyPos.col;
 				break;
+				default:
+					return;
 			}
 
 			for(let k in nextPiecesPosition){
 				if((nextPiecesPosition[k].row === nextEmptyPos.row) && (nextPiecesPosition[k].col === nextEmptyPos.col)){
-					nextPiecesPosition[k] = {row: prevState.emptyPos.row, col: prevState.emptyPos.col};
+					nextPiecesPosition[k] = {...prevState.piecesPosition[k], row: prevState.emptyPos.row, col: prevState.emptyPos.col};
 					break;
 				}
 			}
@@ -69,7 +90,19 @@ class Game extends Component{
 		let pieces = [];
 
 		for(let k in this.state.piecesPosition){
-			pieces.push(<Piece key={k} size={this.props.pieceSize} id={k} col={this.state.piecesPosition[k].col} row={this.state.piecesPosition[k].row} initialCol={this.state.piecesPosition[k].initialCol} initialRow={this.state.piecesPosition[k].initialRow} img={this.props.img} numPieces={this.props.size} />);
+			pieces.push(
+				<Piece 
+					key={k}
+					id={k}
+					size={this.props.pieceSize}
+					col={this.state.piecesPosition[k].col}
+					row={this.state.piecesPosition[k].row}
+					initialCol={this.state.piecesPosition[k].initialCol}
+					initialRow={this.state.piecesPosition[k].initialRow}
+					img={this.props.img}
+					numPieces={this.props.size}
+				/>
+			);
 		}
 
 		return pieces;
@@ -86,7 +119,11 @@ class Game extends Component{
 			let n = 0;
 			let nextPiecesPosition = {};
 			for(let k in prevState.piecesPosition){
-				nextPiecesPosition[k] = {...prevState.piecesPosition[ids[n]]};
+				nextPiecesPosition[k] = {
+					...prevState.piecesPosition[ids[n]],
+					initialRow: prevState.piecesPosition[k].initialRow,
+					initialCol: prevState.piecesPosition[k].initialCol
+				};
 				n++;
 			}
 			return {
