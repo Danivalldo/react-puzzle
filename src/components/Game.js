@@ -11,8 +11,8 @@ class Game extends Component{
 			emptyPos: {row: 0, col: 0}
 		}
 		let idNum = 0;
-		for(let i=0; i<props.size; i++){
-			for(let j=0; j<props.size; j++){
+		for(let i=0; i<props.grid; i++){
+			for(let j=0; j<props.grid; j++){
 				if((this.state.emptyPos.row !== i) || (this.state.emptyPos.col !== j)){
 					this.state.piecesPosition[`piece-${idNum}`] = {row: i, col:j, initialRow: i, initialCol:j};
 				}
@@ -20,8 +20,8 @@ class Game extends Component{
 			}	
 		}
 
-		this._handleKeyUp = this.onKeyUp.bind(this);
-		window.addEventListener('keyup', this._handleKeyUp);
+		this._handleKeyDown = this.onKeyDown.bind(this);
+		window.addEventListener('keydown', this._handleKeyDown);
 	}
 
 	componentDidMount(){
@@ -29,7 +29,7 @@ class Game extends Component{
 	}
 
 	componentWillUnount(){
-		window.removeEventListener('keyup', this._handleKeyUp);
+		window.removeEventListener('keydown', this._handleKeyDown);
 	}
 
 	componentDidUpdate(){
@@ -45,19 +45,18 @@ class Game extends Component{
 			}
 		}
 
-		if(wellPlaced === (this.props.size * this.props.size)-1){
+		if(wellPlaced === (this.props.grid * this.props.grid)-1){
 			alert('Success!');
 		}
 	}
 
-	onKeyUp(e){
-		e.preventDefault();
+	onKeyDown(e){
 		this.setState((prevState)=>{
 			let nextEmptyPos = {...prevState.emptyPos};
 			let nextPiecesPosition = {...prevState.piecesPosition};
 			switch(e.code){
 				case 'ArrowUp':
-					nextEmptyPos.row = (nextEmptyPos.row < this.props.size-1)?nextEmptyPos.row+1:nextEmptyPos.row;
+					nextEmptyPos.row = (nextEmptyPos.row < this.props.grid-1)?nextEmptyPos.row+1:nextEmptyPos.row;
 				break;
 				case 'ArrowDown':
 					nextEmptyPos.row = (nextEmptyPos.row > 0)?nextEmptyPos.row-1:nextEmptyPos.row;
@@ -66,11 +65,13 @@ class Game extends Component{
 					nextEmptyPos.col = (nextEmptyPos.col > 0)?nextEmptyPos.col-1:nextEmptyPos.col;
 				break;
 				case 'ArrowLeft':
-					nextEmptyPos.col = (nextEmptyPos.col < this.props.size-1)?nextEmptyPos.col+1:nextEmptyPos.col;
+					nextEmptyPos.col = (nextEmptyPos.col < this.props.grid-1)?nextEmptyPos.col+1:nextEmptyPos.col;
 				break;
 				default:
 					return;
 			}
+
+			e.preventDefault();
 
 			for(let k in nextPiecesPosition){
 				if((nextPiecesPosition[k].row === nextEmptyPos.row) && (nextPiecesPosition[k].col === nextEmptyPos.col)){
@@ -94,13 +95,13 @@ class Game extends Component{
 				<Piece 
 					key={k}
 					id={k}
-					size={this.props.pieceSize}
+					size={(this.props.size / this.props.grid)}
 					col={this.state.piecesPosition[k].col}
 					row={this.state.piecesPosition[k].row}
 					initialCol={this.state.piecesPosition[k].initialCol}
 					initialRow={this.state.piecesPosition[k].initialRow}
 					img={this.props.img}
-					numPieces={this.props.size}
+					numPieces={this.props.grid}
 				/>
 			);
 		}
@@ -135,7 +136,7 @@ class Game extends Component{
 	render(){
 		return (
 			<div>
-				<div className="game" style={{width: this.props.size*this.props.pieceSize, height: this.props.size*this.props.pieceSize}}>
+				<div className="game" style={{width: this.props.size, height: this.props.size}}>
 					{this.updatePieces()}
 				</div>
 				<p>
