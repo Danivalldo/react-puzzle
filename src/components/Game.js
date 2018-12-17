@@ -13,9 +13,8 @@ class Game extends Component{
 		let idNum = 0;
 		for(let i=0; i<props.size; i++){
 			for(let j=0; j<props.size; j++){
-				this.state.piecesPosition[`piece-${idNum}`] = {row: i, col:j, initialRow: i, initialCol:j};
-				if((this.state.emptyPos.row === i) && (this.state.emptyPos.col === j)){
-					this.state.piecesPosition[`piece-${idNum}`] = null;
+				if((this.state.emptyPos.row !== i) || (this.state.emptyPos.col !== j)){
+					this.state.piecesPosition[`piece-${idNum}`] = {row: i, col:j, initialRow: i, initialCol:j};
 				}
 				idNum++;
 			}	
@@ -53,11 +52,9 @@ class Game extends Component{
 			}
 
 			for(let k in nextPiecesPosition){
-				if(nextPiecesPosition[k]){
-					if((nextPiecesPosition[k].row === nextEmptyPos.row) && (nextPiecesPosition[k].col === nextEmptyPos.col)){
-						nextPiecesPosition[k] = {row: prevState.emptyPos.row, col: prevState.emptyPos.col};
-						break;
-					}
+				if((nextPiecesPosition[k].row === nextEmptyPos.row) && (nextPiecesPosition[k].col === nextEmptyPos.col)){
+					nextPiecesPosition[k] = {row: prevState.emptyPos.row, col: prevState.emptyPos.col};
+					break;
 				}
 			}
 
@@ -72,9 +69,7 @@ class Game extends Component{
 		let pieces = [];
 
 		for(let k in this.state.piecesPosition){
-			if(this.state.piecesPosition[k]){
-				pieces.push(<Piece key={k} size={this.props.pieceSize} id={k} col={this.state.piecesPosition[k].col} row={this.state.piecesPosition[k].row} initialCol={this.state.piecesPosition[k].initialCol} initialRow={this.state.piecesPosition[k].initialRow} img={this.props.img} numPieces={this.props.size} />)
-			}
+			pieces.push(<Piece key={k} size={this.props.pieceSize} id={k} col={this.state.piecesPosition[k].col} row={this.state.piecesPosition[k].row} initialCol={this.state.piecesPosition[k].initialCol} initialRow={this.state.piecesPosition[k].initialRow} img={this.props.img} numPieces={this.props.size} />);
 		}
 
 		return pieces;
@@ -91,17 +86,7 @@ class Game extends Component{
 			let n = 0;
 			let nextPiecesPosition = {};
 			for(let k in prevState.piecesPosition){
-				if(prevState.piecesPosition[k]){
-					if(prevState.piecesPosition[ids[n]]){
-						nextPiecesPosition[k] = {...prevState.piecesPosition[ids[n]]};
-					}else{
-						//nextPiecesPosition[k] = {...prevState.piecesPosition[k]}
-						console.log(k, 'no exists id');
-					}
-				}else{
-					console.log(k, 'no exists k');
-				}
-				// nextPiecesPosition[k] = (prevState.piecesPosition[ids[n]])?{...prevState.piecesPosition[ids[n]]}:null;
+				nextPiecesPosition[k] = {...prevState.piecesPosition[ids[n]]};
 				n++;
 			}
 			return {

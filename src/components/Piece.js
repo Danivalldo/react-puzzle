@@ -20,7 +20,7 @@ class Piece extends Component{
 			'transform': `translate3d(${this.props.col*this.props.size}px,${this.props.row*this.props.size}px,1px)`,
 			'width': this.props.size,
 			'height': this.props.size,
-			//'backgroundImage': `url('${this.props.img}')`,
+			'backgroundImage': `url('${this.props.img}')`,
 			'backgroundSize': `${this.props.size*this.props.numPieces}px ${this.props.size*this.props.numPieces}px`,
 			'backgroundPosition': `${-1*this.state.initialCol*this.props.size}px ${-1*this.state.initialRow*this.props.size}px`
 		}
@@ -28,7 +28,7 @@ class Piece extends Component{
 
 	render(){
 		return (
-			<div id={`${this.props.id}`} className="piece" style={this.place()}>{this.props.id}</div>
+			<div id={`${this.props.id}`} className="piece" style={this.place()}>{/*this.props.id*/}</div>
 		);
 	}
 }
