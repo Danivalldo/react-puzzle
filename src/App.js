@@ -4,15 +4,46 @@ import img from './imgs/713f36b9c2e2aca894b2290d8cb788d9.jpg';
 import gifImg from './imgs/30db44484b1e5d0e2f2531b1005e1449c18b141d_00.gif';
 
 class App extends Component {
+
+  constructor(props){
+    super(props);
+    this.state = {
+      sizeGame : (window.innerWidth-200 > 800)?800:window.innerWidth-200
+    }
+  }
+
+  componentDidMount(){
+    console.log(this.refs.gameRef);
+    window.addEventListener('resize', this.handleOnResize.bind(this))
+  }
+
+  handleClick(){
+    this.refs.gameRef.shuffle();
+  }
+
+  handleOnResize(){
+    this.setState(()=>{
+      return{
+        sizeGame : (window.innerWidth-200 > 800)?800:window.innerWidth-200
+      }
+    })
+  }
+
   render() {
     return (
       <div className="App">
-        <Game 
-        	grid={3} 
-        	size={300} 
+        <Game
+          ref="gameRef"
+        	grid={5} 
+        	size={this.state.sizeGame} 
         	img={img} 
         	onWin={()=>{alert('YOU WON!')}}
         />
+        <p>
+          <button onClick={this.handleClick.bind(this)}>
+            SHUFFLE
+          </button>
+        </p>
       </div>
     );
   }

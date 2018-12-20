@@ -235,9 +235,11 @@ class Game extends Component{
 						emptyPos - col:{this.state.emptyPos.col}, row:{this.state.emptyPos.row}
 					</p>
 				*/}
+				{/*
 				<p>
 					<button onClick={this.shuffle.bind(this)}>Shuffle</button>
 				</p>
+				*/}
 			</div>
 		);
 	}
