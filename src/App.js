@@ -7,7 +7,12 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Game grid={3} size={300} img={gifImg} />
+        <Game 
+        	grid={3} 
+        	size={300} 
+        	img={img} 
+        	onWin={()=>{alert('YOU WON!')}}
+        />
       </div>
     );
   }
