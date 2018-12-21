@@ -7,8 +7,9 @@ class App extends Component {
 
   constructor(props){
     super(props);
+    this.maxSize = 300;
     this.state = {
-      sizeGame : (window.innerWidth-200 > 800)?800:window.innerWidth-200
+      sizeGame : (window.innerWidth-200 > this.maxSize)?this.maxSize:window.innerWidth-200
     }
   }
 
@@ -24,7 +25,7 @@ class App extends Component {
   handleOnResize(){
     this.setState(()=>{
       return{
-        sizeGame : (window.innerWidth-200 > 800)?800:window.innerWidth-200
+        sizeGame : (window.innerWidth-200 > this.maxSize)?this.maxSize:window.innerWidth-200
       }
     })
   }
