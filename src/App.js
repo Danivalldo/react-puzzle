@@ -35,7 +35,7 @@ class App extends Component {
       <div className="App">
         <Game
           ref="gameRef"
-        	grid={5} 
+        	grid={3} 
         	size={this.state.sizeGame} 
         	img={img} 
         	onWin={()=>{alert('YOU WON!')}}
