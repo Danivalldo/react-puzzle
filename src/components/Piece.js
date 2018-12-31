@@ -4,16 +4,37 @@ import './piece-style.css';
 
 class Piece extends Component{
 
-	handleStart(){
-		console.log('start');
+	constructor(props){
+		super(props);
+		this.state = {
+			axis: undefined
+		};
 	}
 
-	handleDrag(){
-
+	handleStart(e, data){
+		
 	}
 
-	handleStop(){
-		console.log('stop');
+	handleDrag(e, data){
+		const absDeltaX = Math.abs(data.deltaX);
+		const absDeltaY = Math.abs(data.deltaY);
+		if(absDeltaX >= 3 || absDeltaY >= 3){
+			if(!this.state.axis){
+				this.setState(()=>{
+					return {
+						axis: (absDeltaX > absDeltaY)?'x':'y'
+					}
+				});
+			}
+		}
+	}
+
+	handleStop(e, data){
+		this.setState(()=>{
+			return {
+				axis: undefined
+			}
+		});
 	}
 
 	place(){
@@ -28,14 +49,29 @@ class Piece extends Component{
 	}
 
 	render(){
+		const pos = {
+			x: this.props.col*this.props.size, 
+			y: this.props.row*this.props.size
+		};
+
+		const gameSize = this.props.size*this.props.numPieces;
+
 		return (
 			<Draggable
+				axis={this.state.axis}
 				onStart={this.handleStart.bind(this)}
     			onDrag={this.handleDrag.bind(this)}
 				onStop={this.handleStop.bind(this)}
-				axis="x"
-				defaultPosition={{x: this.props.col*this.props.size, y: this.props.row*this.props.size}}
-				position={{x: this.props.col*this.props.size, y: this.props.row*this.props.size}}
+				bounds={
+					{	
+						left: (pos.x - this.props.size>=0)?pos.x - this.props.size:0, 
+						top: (pos.y - this.props.size>=0)?pos.y - this.props.size:0,
+						right: (pos.x + this.props.size<gameSize)?pos.x + this.props.size:pos.x,
+						bottom: (pos.y + this.props.size<gameSize)?pos.y + this.props.size:pos.y
+					}
+				}
+				defaultPosition={pos}
+				position={pos}
 			>
 				<div id={`${this.props.id}`} className="piece" style={this.place()}></div>
 			</Draggable>
