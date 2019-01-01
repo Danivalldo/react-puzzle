@@ -36,7 +36,7 @@ class Piece extends Component{
 			}
 		});
 		// console.log(data.x, data.y, this.props.emptyPos.col*this.props.size, this.props.emptyPos.row*this.props.size);
-		if(data.x === this.props.emptyPos.col*this.props.size && data.y === this.props.emptyPos.row * this.props.size){
+		if(data.x === this.props.emptyPos.col * this.props.size && data.y === this.props.emptyPos.row * this.props.size){
 			if(typeof this.props.onMovedToEmpty === 'function'){
 				this.props.onMovedToEmpty(this.props.id);
 			}
