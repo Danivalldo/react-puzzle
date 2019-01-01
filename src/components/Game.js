@@ -127,6 +127,14 @@ class Game extends Component{
 					initialRow={this.state.piecesPosition[k].initialRow}
 					img={this.props.img}
 					numPieces={this.props.grid}
+					onMovedToEmpty={(id)=>{
+						this.setState((prevState)=>{
+							return {
+								piecesPosition: this.getPiecesPositionOnMoveEmptyPos(prevState.piecesPosition[id]),
+								emptyPos: {...prevState.piecesPosition[id]}
+							}
+						})
+					}}
 				/>
 			);
 		}
