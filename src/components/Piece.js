@@ -35,6 +35,12 @@ class Piece extends Component{
 				axis: undefined
 			}
 		});
+		// console.log(data.x, data.y, this.props.emptyPos.col*this.props.size, this.props.emptyPos.row*this.props.size);
+		if(data.x === this.props.emptyPos.col*this.props.size && data.y === this.props.emptyPos.row * this.props.size){
+			if(typeof this.props.onMovedToEmpty === 'function'){
+				this.props.onMovedToEmpty(this.props.id);
+			}
+		}
 	}
 
 	place(){
@@ -54,8 +60,6 @@ class Piece extends Component{
 			y: this.props.row*this.props.size
 		};
 
-		const gameSize = this.props.size*this.props.numPieces;
-
 		const bounds = {
 			left: (this.props.emptyPos.col === this.props.col-1 && this.props.emptyPos.row === this.props.row)?pos.x - this.props.size:pos.x,
 			right: (this.props.emptyPos.col === this.props.col+1 && this.props.emptyPos.row === this.props.row)?pos.x + this.props.size:pos.x,
@@ -69,9 +73,7 @@ class Piece extends Component{
 				onStart={this.handleStart.bind(this)}
     			onDrag={this.handleDrag.bind(this)}
 				onStop={this.handleStop.bind(this)}
-				bounds={
-					bounds
-				}
+				bounds={bounds}
 				defaultPosition={pos}
 				position={pos}
 			>
