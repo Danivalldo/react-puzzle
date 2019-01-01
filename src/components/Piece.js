@@ -35,8 +35,17 @@ class Piece extends Component{
 				axis: undefined
 			}
 		});
-		// console.log(data.x, data.y, this.props.emptyPos.col*this.props.size, this.props.emptyPos.row*this.props.size);
-		if(data.x === this.props.emptyPos.col * this.props.size && data.y === this.props.emptyPos.row * this.props.size){
+		
+		const offset = this.props.size / 2;
+		const emptyPosPx = {
+			x: this.props.emptyPos.col * this.props.size,
+			y: this.props.emptyPos.row * this.props.size
+		}
+
+		if(
+			(data.x <= emptyPosPx.x + offset && data.x >= emptyPosPx.x - offset && this.props.row === this.props.emptyPos.row) ||
+			(data.y <= emptyPosPx.y + offset && data.y >= emptyPosPx.y - offset && this.props.col === this.props.emptyPos.col)
+		){
 			if(typeof this.props.onMovedToEmpty === 'function'){
 				this.props.onMovedToEmpty(this.props.id);
 			}
