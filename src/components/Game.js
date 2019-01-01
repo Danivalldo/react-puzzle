@@ -119,6 +119,7 @@ class Game extends Component{
 				<Piece 
 					key={k}
 					id={k}
+					emptyPos={this.state.emptyPos}
 					size={(this.props.size / this.props.grid)}
 					col={this.state.piecesPosition[k].col}
 					row={this.state.piecesPosition[k].row}
