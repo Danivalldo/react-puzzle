@@ -32,18 +32,18 @@ class App extends Component {
 	render() {
 		return (
 			<div className="App">
-			<Game
-				ref="gameRef"
-				grid={5}
-				size={this.state.sizeGame}
-				img={img}
-				onWin={()=>{alert('YOU WON!')}}
-			/>
-			<p>
-				<button onClick={this.handleClick.bind(this)}>
-				SHUFFLE
-				</button>
-			</p>
+				<Game
+					ref="gameRef"
+					grid={5}
+					size={this.state.sizeGame}
+					img={img}
+					onWin={()=>{alert('YOU WON!')}}
+				/>
+				<p>
+					<button onClick={this.handleClick.bind(this)}>
+					SHUFFLE
+					</button>
+				</p>
 			</div>
 		);
 	}
