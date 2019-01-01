@@ -14,7 +14,6 @@ class App extends Component {
   }
 
   componentDidMount(){
-    console.log(this.refs.gameRef);
     window.addEventListener('resize', this.handleOnResize.bind(this))
   }
 
