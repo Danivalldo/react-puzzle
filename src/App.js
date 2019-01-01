@@ -8,8 +8,9 @@ class App extends Component {
 	constructor(props){
 		super(props);
 		this.maxSize = 300;
+		this.margin = 0;
 		this.state = {
-			sizeGame : (window.innerWidth-200 > this.maxSize)?this.maxSize:window.innerWidth-200
+			sizeGame : (window.innerWidth-this.margin > this.maxSize)?this.maxSize:window.innerWidth-this.margin
 		}
 	}
 
@@ -24,7 +25,7 @@ class App extends Component {
 	handleOnResize(){
 		this.setState(()=>{
 			return{
-				sizeGame : (window.innerWidth-200 > this.maxSize)?this.maxSize:window.innerWidth-200
+				sizeGame : (window.innerWidth-this.margin > this.maxSize)?this.maxSize:window.innerWidth-this.margin
 			}
 		})
 	}
@@ -34,14 +35,14 @@ class App extends Component {
 			<div className="App">
 				<Game
 					ref="gameRef"
-					grid={5}
+					grid={3}
 					size={this.state.sizeGame}
 					img={img}
 					onWin={()=>{alert('YOU WON!')}}
 				/>
 				<p>
 					<button onClick={this.handleClick.bind(this)}>
-					SHUFFLE
+						SHUFFLE
 					</button>
 				</p>
 			</div>
