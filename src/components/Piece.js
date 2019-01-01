@@ -56,21 +56,12 @@ class Piece extends Component{
 
 		const gameSize = this.props.size*this.props.numPieces;
 
-		/*
-		const bounds= {	
-			left: (pos.x - this.props.size>=0)?pos.x - this.props.size:0, 
-			top: (pos.y - this.props.size>=0)?pos.y - this.props.size:0,
-			right: (pos.x + this.props.size<gameSize)?pos.x + this.props.size:pos.x,
-			bottom: (pos.y + this.props.size<gameSize)?pos.y + this.props.size:pos.y
+		const bounds = {
+			left: (this.props.emptyPos.col === this.props.col-1 && this.props.emptyPos.row === this.props.row)?pos.x - this.props.size:pos.x,
+			right: (this.props.emptyPos.col === this.props.col+1 && this.props.emptyPos.row === this.props.row)?pos.x + this.props.size:pos.x,
+			top: (this.props.emptyPos.row === this.props.row-1 && this.props.emptyPos.col === this.props.col)?pos.y - this.props.size:pos.y,
+			bottom: (this.props.emptyPos.row === this.props.row+1 && this.props.emptyPos.col === this.props.col)?pos.y + this.props.size:pos.y,
 		};
-		*/
-
-		const bounds = {
-			left: (this.props.emptyPos.col === pos.x - this.props.size)?pos.x - this.props.size:pos.x,
-			right: (this.props.emptyPos.col === pos.x + this.props.size)?pos.x + this.props.size:pos.x,
-			top: (this.props.emptyPos.row === pos.y - this.props.size)?pos.y - this.props.size:pos.y,
-			bottom: (this.props.emptyPos.row === pos.y + this.props.size)?pos.y + this.props.size:pos.y,
-		}
 
 		return (
 			<Draggable
