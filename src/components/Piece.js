@@ -18,7 +18,7 @@ class Piece extends Component{
 	handleDrag(e, data){
 		const absDeltaX = Math.abs(data.deltaX);
 		const absDeltaY = Math.abs(data.deltaY);
-		if(absDeltaX >= 3 || absDeltaY >= 3){
+		if(absDeltaX >= 1 || absDeltaY >= 1){
 			if(!this.state.axis){
 				this.setState(()=>{
 					return {
@@ -56,6 +56,22 @@ class Piece extends Component{
 
 		const gameSize = this.props.size*this.props.numPieces;
 
+		/*
+		const bounds= {	
+			left: (pos.x - this.props.size>=0)?pos.x - this.props.size:0, 
+			top: (pos.y - this.props.size>=0)?pos.y - this.props.size:0,
+			right: (pos.x + this.props.size<gameSize)?pos.x + this.props.size:pos.x,
+			bottom: (pos.y + this.props.size<gameSize)?pos.y + this.props.size:pos.y
+		};
+		*/
+
+		const bounds = {
+			left: (this.props.emptyPos.col === pos.x - this.props.size)?pos.x - this.props.size:pos.x,
+			right: (this.props.emptyPos.col === pos.x + this.props.size)?pos.x + this.props.size:pos.x,
+			top: (this.props.emptyPos.row === pos.y - this.props.size)?pos.y - this.props.size:pos.y,
+			bottom: (this.props.emptyPos.row === pos.y + this.props.size)?pos.y + this.props.size:pos.y,
+		}
+
 		return (
 			<Draggable
 				axis={this.state.axis}
@@ -63,12 +79,7 @@ class Piece extends Component{
     			onDrag={this.handleDrag.bind(this)}
 				onStop={this.handleStop.bind(this)}
 				bounds={
-					{	
-						left: (pos.x - this.props.size>=0)?pos.x - this.props.size:0, 
-						top: (pos.y - this.props.size>=0)?pos.y - this.props.size:0,
-						right: (pos.x + this.props.size<gameSize)?pos.x + this.props.size:pos.x,
-						bottom: (pos.y + this.props.size<gameSize)?pos.y + this.props.size:pos.y
-					}
+					bounds
 				}
 				defaultPosition={pos}
 				position={pos}
