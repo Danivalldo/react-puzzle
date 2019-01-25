@@ -33,8 +33,10 @@ class Game extends Component{
 		window.removeEventListener('keydown', this._handleKeyDown);
 	}
 
-	componentDidUpdate(){
-		this.checkSuccess();
+	componentDidUpdate(prevProps, prevState){
+		if(this.state.emptyPos !== prevState.emptyPos){
+			this.checkSuccess();
+		}
 	}
 
 	checkSuccess(){
