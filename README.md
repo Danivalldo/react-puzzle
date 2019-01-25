@@ -35,4 +35,4 @@ ReactDOM.render(
 
 ## License
 
-`rc-slider` is released under the MIT license.
+MIT license.
