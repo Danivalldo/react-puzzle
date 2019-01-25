@@ -10,7 +10,8 @@ class App extends Component {
 		this.maxSize = 300;
 		this.margin = 0;
 		this.state = {
-			sizeGame : (window.innerWidth-this.margin > this.maxSize)?this.maxSize:window.innerWidth-this.margin
+			sizeGame : (window.innerWidth-this.margin > this.maxSize)?this.maxSize:window.innerWidth-this.margin,
+			image: img
 		}
 	}
 
@@ -30,6 +31,18 @@ class App extends Component {
 		})
 	}
 
+	handleOnWin(){
+		alert('You won!');
+	}
+
+	changeImage(img){
+		this.setState(()=>{
+			return{
+				image: img
+			}
+		})
+	}
+
 	render() {
 		return (
 			<div className="App">
@@ -37,13 +50,26 @@ class App extends Component {
 					ref="gameRef"
 					grid={3}
 					size={this.state.sizeGame}
-					img={img}
-					onWin={()=>{alert('YOU WON!')}}
+					img={this.state.image}
+					onWin={this.handleOnWin.bind(this)}
 				/>
 				<p>
 					<button onClick={this.handleClick.bind(this)}>
 						SHUFFLE
 					</button>
+				</p>
+				<p>
+					Write your own url image:
+					<input
+						type="text"
+						style={{display:'block', width: '80%', padding: 10, margin: '0 auto'}}
+						placeholder="write the Url of an image"
+						value={this.state.image}
+						onChange={(e)=>{this.changeImage(e.target.value)}}
+					/>
+				</p>
+				<p>
+					or select an animated gif: <button onClick={this.changeImage.bind(this, gifImg)}>Launch Gif</button>
 				</p>
 			</div>
 		);
